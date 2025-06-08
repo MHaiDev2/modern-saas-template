@@ -9,6 +9,7 @@
     "lint": "node node_modules/next/dist/bin/next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "next": "15.3.3",
     "react": "^19",
     "react-dom": "^19"

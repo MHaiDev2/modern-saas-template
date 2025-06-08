@@ -6,6 +6,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a modern SaaS template built with Next.js 14+, TypeScript, and Tailwind CSS. It serves as a boilerplate for future SaaS projects with authentication, subscription management, and modern security features.
 
+## Current Status & Milestones
+
+### ✅ Completed Milestones:
+- **Milestone 1**: Project Setup
+  - Next.js 15.3.3 with TypeScript & App Router
+  - Tailwind CSS v3 configuration 
+  - Git workflow (main/dev/feature branches)
+  - Development environment working
+
+### 🚧 In Progress:
+- **Milestone 2**: Sidebar Layout (Helium-inspired design)
+  - Current branch: `feature/sidebar-layout`
+
+### 📋 Pending Milestones:
+- **Milestone 3**: Authentication System (NextAuth.js)
+- **Milestone 4**: Database Setup (Prisma + PostgreSQL)  
+- **Milestone 5**: Stripe Integration (3-tier subscriptions)
+- **Milestone 6**: Security Features & Internationalization
+- **Milestone 7**: Dashboard & Final Polish
+
 ## Development Commands
 
 ```bash
