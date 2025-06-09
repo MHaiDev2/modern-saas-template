@@ -1,160 +1,218 @@
-# SaaS Template
+# Modern SaaS Template
 
-Ein modernes SaaS-Template mit Next.js 14+, TypeScript, Tailwind CSS und vollständigem Subscription-System.
+A SaaS application template built with Next.js 15, TypeScript, and modern web technologies. Features complete authentication, subscription management, and a beautiful Helium-inspired UI.
 
-## 🚀 Milestone 1: Projekt Setup ✅
-- ✅ Next.js 15.3.3 mit TypeScript & App Router
-- ✅ Tailwind CSS v3 konfiguriert
-- ✅ Git Workflow (main/dev/feature branches)
+## ✨ Features
 
-## 🚀 Milestone 2: Sidebar Layout ✅
+### 🔐 Authentication System
+- NextAuth.js with credentials provider
+- Secure user registration and login
+- Session management with automatic redirects
+- Protected routes and middleware
+- **Demo Account**: `demo@example.com` / `password123`
 
-### Was ist implementiert:
-- ✅ Helium-inspirierte Sidebar mit Gradient-Design
-- ✅ Responsive Layout (Desktop + Mobile)
-- ✅ Header mit Suchleiste und User-Menü
-- ✅ Dashboard-Seite mit Stats und Activities
-- ✅ Navigation Icons (Heroicons)
+### 💳 Subscription Management
+- Stripe integration with webhook handlers
+- Three-tier pricing (Free/Pro/Max)
+- Customer portal for subscription management
+- Checkout session creation
+- Real-time subscription status updates
 
-### 🧪 Testen:
+### 🎨 Modern UI/UX
+- Helium-inspired sidebar with gradient design
+- Fully responsive layout (desktop & mobile)
+- Tailwind CSS with custom components
+- Dark mode ready architecture
+- Professional dashboard with analytics cards
 
-1. **Development Server starten:**
-   ```bash
-   npm run dev
-   ```
+### 🗄️ Database & Backend
+- PostgreSQL with Prisma ORM
+- Docker containerization
+- Type-safe database operations
+- Migration system
+- Database seeding scripts
 
-2. **Dashboard besuchen:**
-   - Öffne http://localhost:3000/dashboard
-   - ✅ Sidebar sollte links sichtbar sein
-   - ✅ Header mit Suchleiste oben
-   - ✅ Dashboard-Content mit Stats-Karten
+## 🚀 Tech Stack
 
-3. **Responsive testen:**
-   - Browser-Fenster verkleinern
-   - ✅ Mobile Hamburger-Menü sollte erscheinen
+- **Frontend**: Next.js 15.3.3, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, NextAuth.js
+- **Database**: PostgreSQL, Prisma ORM
+- **Payments**: Stripe
+- **DevOps**: Docker, Docker Compose
+- **Code Quality**: ESLint, TypeScript
 
-**Note:** Navigation-Links führen noch zu 404 - das ist normal! Funktionalität kommt in späteren Milestones.
+## 📁 Project Structure
 
-## 🚀 Milestone 3: Authentication System ✅
-
-### Was ist implementiert:
-- ✅ NextAuth.js Setup mit Credentials Provider
-- ✅ Login/Signup Formulare mit modernem Design
-- ✅ Session Management und Auto-Redirect
-- ✅ Google OAuth vorbereitet
-- ✅ Landing Page mit Hero-Section und Features
-- ✅ Demo-User für sofortiges Testen
-
-### 🧪 Testen:
-
-1. **Landing Page:**
-   - Öffne http://localhost:3000
-   - ✅ Hero-Section und Features-Grid
-   - ✅ Navigation zu Login/Signup
-
-2. **Authentication Flow:**
-   - Klicke "Get Started" oder "Sign In"
-   - **Demo-Login:** demo@example.com / password123
-   - ✅ Nach Login → automatisch zu Dashboard
-
-3. **Session Persistence:**
-   - Nach Login zur Landing Page zurück
-   - ✅ Automatische Weiterleitung zu Dashboard
-
-## 🚀 Milestone 4: Database Setup ✅
-
-### Was ist implementiert:
-- ✅ PostgreSQL mit Docker Compose
-- ✅ Prisma ORM mit vollständigem Schema
-- ✅ NextAuth.js Prisma Adapter Integration
-- ✅ User Registration API mit bcrypt
-- ✅ Subscription Models (FREE/PRO/MAX)
-- ✅ Database Seeding Script
-- ✅ WSL/Windows Kompatibilität
-
-### 🧪 Setup & Testen:
-
-1. **WSL verwenden (WICHTIG!):**
-   ```bash
-   # In PowerShell:
-   wsl
-   cd /mnt/c/Users/Experiment/Desktop/Payment_template
-   ```
-
-2. **PostgreSQL starten:**
-   ```bash
-   # Database Container starten
-   docker-compose up -d
-   
-   # Status prüfen
-   docker ps
-   ```
-
-3. **Database Interface:**
-   ```bash
-   # Prisma Studio starten (Visual DB Browser)
-   npx prisma studio
-   # → Öffne http://localhost:5555
-   
-   # Alternativ: Command Line
-   docker exec saas_postgres psql -U postgres -d saas_template -c 'SELECT * FROM "User";'
-   ```
-
-4. **App testen:**
-   ```bash
-   npm run dev
-   # → http://localhost:3000/auth/signup
-   # → Registriere neuen User und prüfe in Prisma Studio
-   ```
-
-### 📊 Database Management:
-
-```bash
-# Container Management
-docker-compose up -d      # Starten
-docker-compose down       # Stoppen
-docker-compose logs postgres  # Logs anschauen
-
-# Prisma Commands
-npx prisma studio         # Visual Database Browser
-npx prisma db push        # Schema Änderungen anwenden
-npx prisma migrate dev    # Neue Migration erstellen
-npx prisma generate       # Client neu generieren
-
-# Development Data
-npx tsx scripts/seed.ts   # Test-User erstellen
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/               # API routes
+│   │   ├── auth/         # Authentication endpoints
+│   │   ├── stripe/       # Stripe integration
+│   │   └── user/         # User management
+│   ├── auth/             # Auth pages
+│   ├── dashboard/        # Protected dashboard
+│   └── layout.tsx        # Root layout
+├── components/           # Reusable components
+│   ├── auth/            # Authentication forms
+│   ├── landing/         # Landing page sections
+│   ├── layout/          # Layout components
+│   ├── subscription/    # Pricing & subscription
+│   └── ui/              # Base UI components
+└── lib/                 # Utilities & configurations
+    ├── auth.ts          # NextAuth configuration
+    ├── prisma.ts        # Database client
+    └── stripe.ts        # Stripe configuration
 ```
 
-### Git Status:
-- Aktueller Branch: `feature/database`
-- Bereit für Merge nach `dev` wenn zufrieden
+## 🛠️ Getting Started
 
-## Tech Stack
+### Prerequisites
+- Node.js 18+ 
+- Docker & Docker Compose
+- Git
 
-- **Framework:** Next.js 14+ (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Linting:** ESLint
-
-## Nächste Schritte
-
-- Sidebar Layout (Helium-Style)
-- Authentication System
-- Database Setup
-- Stripe Integration
-
-## Development
-
+### 1. Clone & Install
 ```bash
-# Dependencies installieren
+git clone <repository-url>
+cd Payment_template
 npm install
-
-# Development server starten
-npm run dev
-
-# Production build
-npm run build
-
-# Linting
-npm run lint
 ```
+
+### 2. Environment Setup
+Create a `.env.local` file:
+```env
+NEXTAUTH_SECRET=your-secret-key
+NEXTAUTH_URL=http://localhost:3000
+DATABASE_URL=postgresql://postgres:password@localhost:5432/saas_template
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+```
+
+### 3. Database Setup
+```bash
+# Start PostgreSQL container
+docker-compose up -d
+
+# Apply database schema
+npx prisma db push
+
+# Generate Prisma client
+npx prisma generate
+
+# (Optional) Seed with demo data
+npx tsx scripts/seed.ts
+```
+
+### 4. Start Development
+```bash
+npm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000)
+
+## 🧪 Testing the Application
+
+### Authentication Flow
+1. Visit the landing page at `http://localhost:3000`
+2. Click "Get Started" or "Sign In"
+3. Use demo credentials: `demo@example.com` / `password123`
+4. Verify automatic redirect to dashboard
+
+### Subscription System
+1. Navigate to pricing section
+2. Select a subscription tier
+3. Complete Stripe checkout (use test cards)
+4. Verify subscription status in dashboard
+
+### Database Management
+```bash
+# Visual database browser
+npx prisma studio
+# Opens at http://localhost:5555
+
+# View users via CLI
+docker exec saas_postgres psql -U postgres -d saas_template -c 'SELECT * FROM "User";'
+```
+
+## 🔧 Development Commands
+
+```bash
+# Development
+npm run dev              # Start dev server
+npm run build           # Production build
+npm run start           # Start production server
+
+# Code Quality
+npm run lint            # Run ESLint
+npm run lint:fix        # Fix ESLint issues
+npm run type-check      # TypeScript checking
+
+# Database
+npx prisma studio       # Database GUI
+npx prisma db push      # Apply schema changes
+npx prisma migrate dev  # Create migration
+npx prisma generate     # Update client
+
+# Docker
+docker-compose up -d    # Start database
+docker-compose down     # Stop containers
+docker-compose logs     # View logs
+```
+
+## 🏗️ Architecture Decisions
+
+### Why Next.js 15?
+- Latest App Router for better performance
+- Built-in API routes eliminate need for separate backend
+- Server-side rendering for SEO optimization
+- TypeScript integration out of the box
+
+### Why Prisma?
+- Type-safe database operations
+- Automatic schema migrations
+- Excellent developer experience
+- Built-in connection pooling
+
+### Why Stripe?
+- Industry standard for SaaS payments
+- Comprehensive webhook system
+- Customer portal for self-service
+- International payment support
+
+## 🚦 Current Status
+
+- ✅ **Project Setup**: Next.js 15, TypeScript, Tailwind
+- ✅ **UI/UX Design**: Responsive layout with Helium-inspired sidebar
+- ✅ **Authentication**: NextAuth.js with secure session management
+- ✅ **Database**: PostgreSQL with Prisma ORM
+- ✅ **Payments**: Stripe integration with subscription management
+- 🚧 **Security**: Enhanced security features (in progress)
+- 📋 **Internationalization**: Multi-language support (planned)
+
+## 📋 API Documentation
+
+### Authentication Endpoints
+- `POST /api/auth/signup` - User registration
+- `POST /api/auth/signin` - User login
+- `GET /api/auth/session` - Current session
+
+### Stripe Endpoints  
+- `POST /api/stripe/create-checkout-session` - Create payment session
+- `POST /api/stripe/customer-portal` - Access customer portal
+- `POST /api/stripe/webhook` - Handle Stripe events
+
+### User Management
+- `GET /api/user/subscription` - Get subscription status
+
+## 🤝 Contributing
+
+1. Create feature branch: `git checkout -b feature/amazing-feature`
+2. Commit changes: `git commit -m 'Add amazing feature'`
+3. Push to branch: `git push origin feature/amazing-feature`
+4. Open Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
