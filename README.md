@@ -213,6 +213,28 @@ docker-compose logs     # View logs
 3. Push to branch: `git push origin feature/amazing-feature`
 4. Open Pull Request
 
+## 📸 Screenshots
+
+### Landing Page
+![Landing Page](Screenshots/landing_page.png)
+*Modern landing page with hero section, feature highlights, and clean navigation*
+
+### Dashboard with Subscription Management
+![Dashboard](Screenshots/dashboard.png)
+*Helium-inspired sidebar with analytics cards and integrated pricing modal*
+
+### Authentication Forms
+![Authentication](Screenshots/login.png)
+*Clean signup/login forms with Google OAuth integration*
+
+### Stripe Checkout Integration
+![Stripe Integration](Screenshots/stripe_integration.png)
+*Professional Stripe checkout flow with PRO subscription (€29/month)*
+
+### Database Management
+![Database Management](Screenshots/prisma_studio.png)
+*Prisma Studio interface showing user data and subscription status*
+
 ## 📄 License
 
 This project is licensed under the MIT License.
