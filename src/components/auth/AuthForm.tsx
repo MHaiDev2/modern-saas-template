@@ -38,8 +38,33 @@ export default function AuthForm({ type }: AuthFormProps) {
           router.push('/dashboard');
         }
       } else {
-        // TODO: Implement signup logic with database
-        setError('Signup not implemented yet - use demo@example.com / password123');
+        // Signup logic
+        const response = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, email, password }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          setError(data.error || 'Failed to create account');
+        } else {
+          // Auto sign in after successful signup
+          const result = await signIn('credentials', {
+            email,
+            password,
+            redirect: false,
+          });
+
+          if (result?.error) {
+            setError('Account created but sign in failed');
+          } else {
+            router.push('/dashboard');
+          }
+        }
       }
     } catch (error) {
       setError('Something went wrong');

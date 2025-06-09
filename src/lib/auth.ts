@@ -1,9 +1,12 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { prisma } from './prisma';
 import bcrypt from 'bcryptjs';
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -16,28 +19,32 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // TODO: Replace with actual database query
-        // For now, we'll use a mock user for testing
-        const mockUser = {
-          id: '1',
-          email: 'demo@example.com',
-          name: 'Demo User',
-          hashedPassword: await bcrypt.hash('password123', 12) // password123
-        };
+        try {
+          const user = await prisma.user.findUnique({
+            where: {
+              email: credentials.email,
+            },
+          });
 
-        if (credentials.email === mockUser.email) {
-          const isValid = await bcrypt.compare(credentials.password, mockUser.hashedPassword);
+          if (!user || !user.password) {
+            return null;
+          }
+
+          const isValid = await bcrypt.compare(credentials.password, user.password);
           
           if (isValid) {
             return {
-              id: mockUser.id,
-              email: mockUser.email,
-              name: mockUser.name,
+              id: user.id,
+              email: user.email,
+              name: user.name,
             };
           }
-        }
 
-        return null;
+          return null;
+        } catch (error) {
+          console.error('Auth error:', error);
+          return null;
+        }
       }
     }),
     GoogleProvider({
@@ -46,7 +53,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   session: {
-    strategy: 'jwt',
+    strategy: 'database',
   },
   pages: {
     signIn: '/auth/signin',
