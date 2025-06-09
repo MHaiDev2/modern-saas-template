@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -24,6 +25,26 @@ const navigation = [
 export default function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const [userTier, setUserTier] = useState<'FREE' | 'PRO' | 'MAX'>('FREE');
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (session?.user?.email) {
+        try {
+          const response = await fetch('/api/user/subscription');
+          if (response.ok) {
+            const data = await response.json();
+            setUserTier(data.tier);
+          }
+        } catch (error) {
+          console.error('Failed to fetch user data:', error);
+        }
+      }
+    };
+
+    fetchUserData();
+  }, [session]);
 
   return (
     <>
@@ -32,14 +53,25 @@ export default function Sidebar() {
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="fixed inset-0 bg-gray-900/80" onClick={() => setSidebarOpen(false)} />
           <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-xl">
-            <SidebarContent navigation={navigation} pathname={pathname} closeSidebar={() => setSidebarOpen(false)} />
+            <SidebarContent 
+              navigation={navigation} 
+              pathname={pathname} 
+              session={session}
+              userTier={userTier}
+              closeSidebar={() => setSidebarOpen(false)} 
+            />
           </div>
         </div>
       )}
 
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-        <SidebarContent navigation={navigation} pathname={pathname} />
+        <SidebarContent 
+          navigation={navigation} 
+          pathname={pathname}
+          session={session}
+          userTier={userTier}
+        />
       </div>
 
       {/* Mobile menu button */}
@@ -56,11 +88,15 @@ export default function Sidebar() {
 
 function SidebarContent({ 
   navigation, 
-  pathname, 
+  pathname,
+  session,
+  userTier,
   closeSidebar 
 }: { 
   navigation: typeof navigation;
   pathname: string;
+  session: any;
+  userTier: 'FREE' | 'PRO' | 'MAX';
   closeSidebar?: () => void;
 }) {
   return (
@@ -105,11 +141,15 @@ function SidebarContent({
       <div className="border-t border-slate-700 p-4">
         <div className="flex items-center space-x-3">
           <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
-            <span className="text-sm font-medium text-white">U</span>
+            <span className="text-sm font-medium text-white">
+              {session?.user?.name?.charAt(0).toUpperCase() || 'U'}
+            </span>
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-white truncate">Demo User</p>
-            <p className="text-xs text-slate-400 truncate">Free Plan</p>
+            <p className="text-sm font-medium text-white truncate">
+              {session?.user?.name || 'User'}
+            </p>
+            <p className="text-xs text-slate-400 truncate">{userTier} Plan</p>
           </div>
         </div>
       </div>
